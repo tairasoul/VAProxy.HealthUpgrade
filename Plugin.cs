@@ -29,9 +29,6 @@ namespace HealthUpgrade
 
         int[] Upgraded(int level, int currentPrice)
         {
-            Logger.LogInfo(level);
-            Logger.LogInfo(levelPrices[level - 1]);
-            Logger.LogInfo(refundPrices[level - 1]);
             bool increaseCurrent = false;
             if (healthController?.currentHealth == healthController?.maxHealth)
                 increaseCurrent = true;
@@ -43,9 +40,6 @@ namespace HealthUpgrade
 
         int[] Downgraded(int level, int currentPrice)
         {
-            Logger.LogInfo(level);
-            Logger.LogInfo(levelPrices[level - 1]);
-            Logger.LogInfo(refundPrices[level - 1]);
             if (healthController != null) healthController.maxHealth = level;
             if (healthController?.currentHealth > level && healthController != null)
                 healthController.currentHealth = level;
@@ -70,15 +64,8 @@ namespace HealthUpgrade
             {
                 yield return null;
             }
-            try
-            {
-                Upgrade upgrade = new("Health", "healthupgrade.health", "Frame", "Toughness of Sen's frame.", Upgraded, Downgraded, 3, 1, 6, levelPrices[2], refundPrices[2]);
-                Framework.AddUpgrade(upgrade);
-            }
-            catch (System.Exception ex)
-            {
-                Logger.LogError(ex);
-            }
+            Upgrade upgrade = new("Health", "healthupgrade.health", "Frame", "Toughness of Sen's frame.", Upgraded, Downgraded, 3, 1, 6, levelPrices[2], refundPrices[2]);
+            Framework.AddUpgrade(upgrade);
         }
     }
 }
