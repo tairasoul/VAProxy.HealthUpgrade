@@ -1,6 +1,5 @@
 ﻿using BepInEx;
 using Invector;
-using System.Collections;
 using UnityEngine;
 using UpgradeFramework;
 
@@ -10,7 +9,7 @@ namespace HealthUpgrade
     {
         public const string GUID = "tairasoul.healthupgrade";
         public const string Name = "HealthUpgrade";
-        public const string Version = "1.0.0";
+        public const string Version = "1.0.1";
     }
     [BepInPlugin(PluginInfo.GUID, PluginInfo.Name, PluginInfo.Version)]
     internal class Plugin : BaseUnityPlugin
@@ -55,15 +54,7 @@ namespace HealthUpgrade
             init = true;
             GameObject upg = new("HealthUpgrade");
             DontDestroyOnLoad(upg);
-            upg.AddComponent<vHealthControllerChecker>().StartCoroutine(InitCoroutine());
-        }
-
-        IEnumerator InitCoroutine()
-        {
-            while (!Framework.Ready)
-            {
-                yield return null;
-            }
+            upg.AddComponent<vHealthControllerChecker>();
             Upgrade upgrade = new("Health", "healthupgrade.health", "Frame", "Toughness of Sen's frame.", Upgraded, Downgraded, 3, 1, 6, levelPrices[2], refundPrices[2]);
             Framework.AddUpgrade(upgrade);
         }
